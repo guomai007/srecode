@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeselector
+  labels:
+    env: test-for-one
+spec:
+  nodeSelector:
+    zone: B
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent

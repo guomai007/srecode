@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    id: very-important                  # change
+  name: deploy-important
+spec:
+  replicas: 3                           # change
+  selector:
+    matchLabels:
+      id: very-important                # change
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        id: very-important              # change
+    spec:
+      containers:
+      - image: nginx:1.17.6-alpine
+        name: container1                # change
+        resources: {}
+      - image: redis:latest         # add
+        name: container2                # add
+      topologySpreadConstraints:                 # add
+      - maxSkew: 1                               # add
+        topologyKey: kubernetes.io/hostname      # add
+        whenUnsatisfiable: DoNotSchedule         # add
+        labelSelector:                           # add
+          matchLabels:                           # add
+            id: very-important                   # add
+status: {}
