@@ -1,0 +1,30 @@
+# This playbook deploy OpenLDAP Client for Centos 6.X/7.X
+- hosts: physical_centos
+  remote_user: root
+  tasks:
+  - name: remove sssd package first
+    yum: pkg=sssd-common,sssd-client,sssd-ldap state=removed
+  - name: install necessary package
+    yum: pkg=openldap,nss-pam-ldapd state=present
+  - name: config PAM by authconfig
+    shell: 'authconfig --savebackup=default && authconfig --disablesssd --disablesssdauth --enableforcelegacy  --enablemkhomedir --disableldaptls --enableldap --enableldapauth --ldapserver=ldap://192.168.16.200 --ldapbasedn="dc=caicloud,dc=io" --enableshadow --update'
+    args:
+       creates: /var/lib/authconfig/backup-default
+  - name: make sure nslcd autoStart
+    service: name=nslcd enabled=yes
+  - name: restart nslcd
+    service: name=nslcd state=restarted
+  - name: verify ldap user 
+    shell: id guobin
+  - name: add sudoer in nsswitch.conf
+    lineinfile: 
+       path: /etc/nsswitch.conf 
+       line: 'sudoers:    ldap files'
+  - name: config sudo-ldap.conf step1
+    lineinfile: 
+       path: /etc/sudo-ldap.conf 
+       line: 'uri ldap://in.office.rack.caicloud.io:389'
+  - name: config sudo-ldap.conf step2
+    lineinfile: 
+       path: /etc/sudo-ldap.conf 
+       line: 'sudoers_base ou=SUDOers,dc=caicloud,dc=io'
