@@ -39,7 +39,7 @@ do
             RESULT='NO Result!'
             SUMFAIL=`expr $SUMFAIL \+ 1`
     fi
-    echo -e "$ZONE\t@${DNSSERVER}\t\t${RESULT}"
+    /bin/echo -e "$ZONE\t@${DNSSERVER}\t\t${RESULT}"
     done
 done <  ./dnslist
 echo "---------------------------------------------------------------------------"
